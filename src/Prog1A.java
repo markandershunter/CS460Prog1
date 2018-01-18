@@ -1,3 +1,16 @@
+/*
+    Name:               Mark Hunter
+    Course:             CS460
+    Assignment:         Prog1A
+    Instructor:         Dr. McCann
+    Due Date:           1/18/2018 before class (@12:30)
+    Description:        The binary file contents are stored exactly the same as the example file, BinaryIO.java. Written with
+                        Java 1.8. Input for the file is in the following format: "java Prog1A (filepath for input file) linesToRead(blank for
+                        all lines)".
+    Missing features:   None!
+    Known Bugs:         None that I came across.
+ */
+
 import java.io.*;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -91,7 +104,7 @@ class DataRecord{
 	public void setRaceOtherLen(int raceOtherLen) {	this.raceOtherLen = raceOtherLen; }
 	public void setStratumLen(int stratumLen) {	this.stratumLen = stratumLen; }
 
-	// setDate parses a string so the parsing algorithm can be reused
+	// Parses the string newDate so the parsing algorithm can be reused
     public void setDate(String newDate){
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -160,6 +173,7 @@ class DataRecord{
     	}
     }
 
+    // Dump the final max lengths at the end of the binary file
     public void dumpLengths(RandomAccessFile stream){
         try {
             stream.writeInt(stratumLen);
@@ -228,6 +242,7 @@ class DataRecord{
     	}
     }
 
+    // Fetch the final max lengths from the end of the binary file
     public void fetchLengths(RandomAccessFile stream){
         try {
             stratumLen = stream.readInt();
@@ -274,9 +289,10 @@ public class Prog1A {
         int narr1Len = 0;
         int narr2Len = 0;
 
-        // Initialize the record that will hold the data when it is dumped
-        // to the binary file
+        // Filepath of the user-specified input file
         filepath = args[0];
+
+        // Set the linesToRead specified by the user. All lines are read if the command line argument is left blank
         if(args.length > 1)
             linesToRead = Integer.parseInt(args[1]);
         else
@@ -356,6 +372,7 @@ public class Prog1A {
                         System.exit(-1);
                     }
 
+                    // Update the max lengths
                     if(rec1.getStratum().length() > stratumLen)
                         stratumLen = rec1.getStratum().length();
 
@@ -383,6 +400,7 @@ public class Prog1A {
             e.printStackTrace();
         }
 
+        // Set the final max lengths in each DataRecord
         for(DataRecord rec: dataRecords){
             rec.setStratumLen(stratumLen);
             rec.setRaceOtherLen(raceOtherLen);
@@ -399,11 +417,9 @@ public class Prog1A {
             rec.dumpObject(dataStream);
         }
 
-
-
         System.out.println("\nThere are " + numberOfRecords + " records in the file.\n");
 
-        // Fetching portion to check output
+        // PRINTING COMMENTED OFF
 
 //        rec1 = new DataRecord();
 //
