@@ -1,0 +1,3 @@
+find max length for each column of data
+write test script
+write DataRecord class similar to BinaryIO.java
