@@ -197,12 +197,15 @@ class DataRecord{
     	byte[] diagOtherBuff = new byte[diagOtherLen];
     	byte[] narr1Buff = new byte[narr1Len];
     	byte[] narr2Buff = new byte[narr2Len];
-    	
+
     	try{
+
     		caseNum = stream.readInt();
 
     		stream.readFully(dateBuff);
     		setDate(new String(dateBuff));
+
+
 
             psu = stream.readInt();
             weight = stream.readDouble();
@@ -303,6 +306,10 @@ public class Prog1A {
 
         // Initialize binary file
         fileRef = new File(filepath.substring(filepath.lastIndexOf("/") + 1, filepath.lastIndexOf("."))+ ".bin");
+
+        if(fileRef.exists()){
+            fileRef.delete();
+        }
 
         // Initialize RAF
         try {
@@ -419,6 +426,9 @@ public class Prog1A {
 
         System.out.println("\nThere are " + numberOfRecords + " records in the file.\n");
 
+        if(dataRecords.size() > 0)
+            dataRecords.get(0).dumpLengths(dataStream);
+
         // PRINTING COMMENTED OFF
 
 //        rec1 = new DataRecord();
@@ -428,8 +438,7 @@ public class Prog1A {
 //        rec1.setDiagOtherLen(diagOtherLen);
 //        rec1.setNarr1Len(narr1Len);
 //        rec1.setNarr2Len(narr2Len);
-//
-//        rec1.dumpLengths(dataStream);
+
 //
 //        // Move the file pointer to the front of the file
 //        try {
